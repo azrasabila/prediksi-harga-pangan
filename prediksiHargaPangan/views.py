@@ -19,7 +19,7 @@ def dashboard(request):
 
 def prediksi(request):
     # ambil data dari services
-    data = get_data()
+    data = get_data(3)
     # ambil result
     df = data['data'][0]['result']
     commodity_name = data['data'][0]['commodity_name']
@@ -58,7 +58,7 @@ def prediksi(request):
     yhat = forecast['yhat'].to_json(orient='records')
     yhat_lower = forecast['yhat_lower'].to_json(orient='records')
     yhat_upper = forecast['yhat_upper'].to_json(orient='records')
-    #json_data = json.loads(json_data)
+    data_json = json.loads(data_json)
     # masukin data ke object
     labels = forecast['ds'].to_json(orient='records')
     #labels = time.ctime(labels)

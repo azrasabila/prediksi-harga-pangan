@@ -51,7 +51,7 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script>
-        drawLineGraph({{data|safe}}, {{labels|safe}}, {{yhat_lower|safe}}, {{yhat_upper|safe}}, 'myChartline');
+        drawLineGraph({{yhat|safe}}, {{labels|safe}}, {{yhat_lower|safe}}, {{yhat_upper|safe}}, 'myChartline');
 
         function drawLineGraph(data, labels, yhat_lower, yhat_upper, id) {
         console.log(yhat_lower);

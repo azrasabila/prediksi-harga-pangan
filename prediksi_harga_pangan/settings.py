@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'prediksi_harga_pangan.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, "db.sqlite3"))
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'prediksi',
+        'USER': "root",
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
     }
 }
 
