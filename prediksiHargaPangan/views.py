@@ -1,0 +1,83 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+import pandas as pd
+import numpy as np
+from prophet import Prophet
+import json
+import time
+
+from prediksiHargaPangan.services import *
+
+
+def index(request):
+    return render(request, "hello.html", {})
+
+
+def dashboard(request):
+    return render(request, "dashboard/index.html", {})
+
+
+def prediksi(request):
+    # ambil data dari services
+    data = get_data()
+    # ambil result
+    df = data['data'][0]['result']
+    commodity_name = data['data'][0]['commodity_name']
+    # convert ke dataframe
+    df = pd.DataFrame(df, columns=['value', 'time', 'date', 'span'])
+    # data preprocessing
+    df.drop(['time', 'span'], axis=1, inplace=True)
+    df.columns = ['y', 'ds']
+    # ubah index jadi tanggal dengan format datetime
+    df.ds = pd.to_datetime(df.ds)
+    df.index = pd.to_datetime(df.ds)
+    df.y = df['y'].astype(np.int64)
+    # drop nilai 0 kalo pake MAPE
+    df = df[(df != 0).all(1)]
+    # bikin nilai carrying capacity
+    df['cap'] = df['y'].mean()
+    # split data training dan testing 80:20
+    df_train = df[:int(df.shape[0]*0.8)]
+    df_test = df[int(df.shape[0]*0.8):]
+    # resampling = fill tanggal yang ke skip
+    df_train = df_train.resample('D').pad()
+    df_train['ds'] = df_train.index
+    # fitting model
+    m = Prophet(growth='logistic')
+    m.add_country_holidays(country_name='ID')
+    m.fit(df_train)
+    # bikin prediksi dari model yang udah dibuat
+    forecast = m.predict(df_test)
+    # itung MAPE
+    mape = mean_abs_perc_err(y_true=np.asarray(
+        df_test['y']), y_pred=np.asarray(forecast['yhat']))
+    mape
+    # convert ke JSON
+    data_json = forecast[['ds', 'yhat', 'yhat_upper',
+                          'yhat_lower']].to_json(orient='records')
+    yhat = forecast['yhat'].to_json(orient='records')
+    yhat_lower = forecast['yhat_lower'].to_json(orient='records')
+    yhat_upper = forecast['yhat_upper'].to_json(orient='records')
+    #json_data = json.loads(json_data)
+    # masukin data ke object
+    labels = forecast['ds'].to_json(orient='records')
+    #labels = time.ctime(labels)
+    #labels = json.loads(json_data)
+    #data = []
+    # labels.append(forecast[['ds']])
+    # data.append(forecast[['yhat']])
+    context = {
+        "data": data_json,
+        'yhat': yhat,
+        "yhat_lower": yhat_lower,
+        "yhat_upper": yhat_upper,
+        'df': df,
+        'df_train': df_train,
+        'df_test': df_test,
+        'forecast': forecast[['ds', 'yhat']],
+        'labels': labels,
+        'commodity_name': commodity_name,
+        'mape': mape,
+        'akurasi': 100-mape
+    }
+    return render(request, "hello.html", context)
