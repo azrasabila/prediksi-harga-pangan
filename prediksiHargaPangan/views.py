@@ -33,7 +33,7 @@ def prediksi(request):
     df.index = pd.to_datetime(df.ds)
     df.y = df['y'].astype(np.int64)
     # drop nilai 0 kalo pake MAPE
-    df = df[(df != 0).all(1)]
+    df = drop_zero(df)
     # bikin nilai carrying capacity
     df['cap'] = df['y'].mean()
     # split data training dan testing 80:20
@@ -51,7 +51,9 @@ def prediksi(request):
     # itung MAPE
     mape = mean_abs_perc_err(y_true=np.asarray(
         df_test['y']), y_pred=np.asarray(forecast['yhat']))
-    mape
+    # itung rmse
+    rmse = root_mean_square_err(y_true=np.asarray(
+        df_test['y']), y_pred=np.asarray(forecast['yhat']))
     # convert ke JSON
     data_json = forecast[['ds', 'yhat', 'yhat_upper',
                           'yhat_lower']].to_json(orient='records')
@@ -78,6 +80,7 @@ def prediksi(request):
         'labels': labels,
         'commodity_name': commodity_name,
         'mape': mape,
-        'akurasi': 100-mape
+        'akurasi': 100-mape,
+        'rmse': rmse
     }
     return render(request, "hello.html", context)

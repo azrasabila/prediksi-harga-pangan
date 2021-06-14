@@ -21,3 +21,14 @@ class Komoditas(models.Model):
         db_table = 'komoditas'
         managed = False
         unique_together = (('NAMA_KOMODITAS', 'ID_FOREIGN'))
+
+
+class Harga(models.Model):
+    ID_HARGA = models.AutoField(primary_key=True)
+    HARGA = models.IntegerField()
+    TANGGAL = models.DateField()
+
+    class Meta:
+        db_table = 'komoditas'
+        managed = False
+        unique_together = (())

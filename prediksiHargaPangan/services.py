@@ -5,6 +5,8 @@ import numpy as np
 from prophet import Prophet
 import json
 from datetime import date
+from math import sqrt
+from sklearn.metrics import mean_squared_error
 
 
 def get_data(id_komoditas):
@@ -19,3 +21,11 @@ def get_data(id_komoditas):
 
 def mean_abs_perc_err(y_true, y_pred):
     return np.mean(np.abs((y_true - y_pred) / y_true)) * 100
+
+
+def root_mean_square_err(y_true, y_pred):
+    return sqrt(mean_squared_error(y_true, y_pred))
+
+
+def drop_zero(df):
+    return df[(df != 0).all(1)]
