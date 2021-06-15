@@ -29,6 +29,6 @@ class Harga(models.Model):
     TANGGAL = models.DateField()
 
     class Meta:
-        db_table = 'komoditas'
+        db_table = 'harga'
         managed = False
-        unique_together = (())
+        unique_together = (('HARGA', 'TANGGAL'))

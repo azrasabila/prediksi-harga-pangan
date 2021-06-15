@@ -10,7 +10,7 @@ from prediksiHargaPangan.services import *
 
 
 def index(request):
-    return render(request, "hello.html", {})
+    return render(request, "index.html", {})
 
 
 def dashboard(request):
@@ -83,4 +83,4 @@ def prediksi(request):
         'akurasi': 100-mape,
         'rmse': rmse
     }
-    return render(request, "hello.html", context)
+    return render(request, "index.html", context)

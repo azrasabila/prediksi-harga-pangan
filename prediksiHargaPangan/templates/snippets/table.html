@@ -1,0 +1,23 @@
+{%load static%}
+<div class="row" style="height: 100%">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>DS</th>
+        <th>Yhat</th>
+        <th>Yhat Lower</th>
+        <th>Yhat Upper</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if data %} {% for i in data %}
+      <tr>
+        <td>{{i.ds}}</td>
+        <td>{{i.yhat}}</td>
+        <td>{{i.yhat_lower}}</td>
+        <td>{{i.yhat_upper}}</td>
+      </tr>
+      {% endfor %} {% endif %}
+    </tbody>
+  </table>
+</div>
