@@ -7,10 +7,16 @@ import json
 import time
 
 from prediksiHargaPangan.services import *
+from .models import *
 
 
 def index(request):
-    return render(request, "index.html", {})
+
+    komoditas = Komoditas.objects.all()
+    context = {
+        'komoditas': komoditas
+    }
+    return render(request, "index.html", context)
 
 
 def dashboard(request):
@@ -83,4 +89,4 @@ def prediksi(request):
         'akurasi': 100-mape,
         'rmse': rmse
     }
-    return render(request, "index.html", context)
+    return render(request, "prediksi/index.html", context)
