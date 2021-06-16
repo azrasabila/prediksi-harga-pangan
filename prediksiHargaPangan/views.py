@@ -5,6 +5,8 @@ import numpy as np
 from prophet import Prophet
 import json
 import time
+from django import forms
+from django.http import HttpResponseRedirect
 
 from prediksiHargaPangan.services import *
 from .models import *
@@ -14,8 +16,11 @@ def index(request):
 
     komoditas = Komoditas.objects.all()
     context = {
-        'komoditas': komoditas
+        'komoditas': komoditas,
     }
+    if request.method == 'POST':
+        context['id_foreign'] = request.POST['id_foreign']
+
     return render(request, "index.html", context)
 
 
@@ -23,9 +28,9 @@ def dashboard(request):
     return render(request, "dashboard/index.html", {})
 
 
-def prediksi(request):
+def prediksi(request, id_foreign):
     # ambil data dari services
-    data = get_data(3)
+    data = get_data(id_foreign)
     # ambil result
     df = data['data'][0]['result']
     commodity_name = data['data'][0]['commodity_name']
@@ -68,7 +73,8 @@ def prediksi(request):
     yhat_upper = forecast['yhat_upper'].to_json(orient='records')
     data_json = json.loads(data_json)
     # masukin data ke object
-    labels = forecast['ds'].to_json(orient='records')
+    labels = pd.to_datetime(
+        forecast['ds'], format='%d-%m-%Y').to_json(orient='records')
     #labels = time.ctime(labels)
     #labels = json.loads(json_data)
     #data = []
