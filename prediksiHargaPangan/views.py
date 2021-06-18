@@ -66,15 +66,17 @@ def prediksi(request, id_foreign):
     rmse = root_mean_square_err(y_true=np.asarray(
         df_test['y']), y_pred=np.asarray(forecast['yhat']))
     # convert ke JSON
+    # data_json = {forecast['ds'].dt.strftime(
+    #    '%Y-%m-%d'), forecast['yhat'], forecast['yhat_upper'], forecast['yhat_lower']}.to_json(orient='records')
     data_json = forecast[['ds', 'yhat', 'yhat_upper',
-                          'yhat_lower']].to_json(orient='records')
+                          'yhat_lower']].to_json(orient='records', date_format='iso', double_precision=0)
+    print(data_json)
     yhat = forecast['yhat'].to_json(orient='records')
     yhat_lower = forecast['yhat_lower'].to_json(orient='records')
     yhat_upper = forecast['yhat_upper'].to_json(orient='records')
     data_json = json.loads(data_json)
     # masukin data ke object
-    labels = pd.to_datetime(
-        forecast['ds'], format='%d-%m-%Y').to_json(orient='records')
+    labels = forecast['ds'].dt.strftime('%Y-%m-%d').to_json(orient='records')
     #labels = time.ctime(labels)
     #labels = json.loads(json_data)
     #data = []
