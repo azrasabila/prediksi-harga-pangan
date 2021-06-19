@@ -1,59 +1,58 @@
 {% load static %}
-<ul class="nav nav-tabs" id="myTab" role="tablist">
-  <li class="nav-item" role="presentation">
+<div class="d-flex align-items-start">
+  <div
+    class="nav flex-column nav-pills me-3"
+    id="v-pills-tab"
+    role="tablist"
+    aria-orientation="vertical"
+  >
     <button
       class="nav-link active"
-      id="chart-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#chart"
+      id="v-pills-chart-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#v-pills-chart"
       type="button"
       role="tab"
-      aria-controls="chart"
+      aria-controls="v-pills-chart"
       aria-selected="true"
     >
       Chart
     </button>
-  </li>
-  <li class="nav-item" role="presentation">
     <button
       class="nav-link"
-      id="table-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#table"
+      id="v-pills-table-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#v-pills-table"
       type="button"
       role="tab"
-      aria-controls="table"
+      aria-controls="v-pills-table"
       aria-selected="false"
     >
       Table
     </button>
-  </li>
-  <li class="nav-item" role="presentation">
     <button
       class="nav-link"
-      id="akurasi-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#akurasi"
+      id="v-pills-akurasi-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#v-pills-akurasi"
       type="button"
       role="tab"
-      aria-controls="akurasi"
+      aria-controls="v-pills-akurasi"
       aria-selected="false"
     >
       Akurasi
     </button>
-  </li>
-  <li class="nav-item" role="presentation">
     <button
       class="nav-link"
-      id="raw-tab"
-      data-bs-toggle="tab"
-      data-bs-target="#raw"
+      id="v-pills-raw-tab"
+      data-bs-toggle="pill"
+      data-bs-target="#v-pills-raw"
       type="button"
       role="tab"
-      aria-controls="raw"
+      aria-controls="v-pills-raw"
       aria-selected="false"
     >
       Raw Data
     </button>
-  </li>
-</ul>
+  </div>
+</div>

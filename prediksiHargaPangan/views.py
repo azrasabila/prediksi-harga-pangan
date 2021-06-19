@@ -7,19 +7,23 @@ import json
 import time
 from django import forms
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 
 from prediksiHargaPangan.services import *
 from .models import *
+from .forms import CommodityForm
 
 
 def index(request):
-
-    komoditas = Komoditas.objects.all()
+    commodityForm = CommodityForm()
     context = {
-        'komoditas': komoditas,
+        'commodityForm': commodityForm
     }
+    print(request.POST)
+
     if request.method == 'POST':
-        context['id_foreign'] = request.POST['id_foreign']
+        context['id_foreign'] = request.POST['pilih_komoditas']
+        return redirect('/prediksi/' + request.POST['pilih_komoditas'], )
 
     return render(request, "index.html", context)
 
@@ -76,12 +80,8 @@ def prediksi(request, id_foreign):
     yhat_upper = forecast['yhat_upper'].to_json(orient='records')
     data_json = json.loads(data_json)
     # masukin data ke object
-    labels = forecast['ds'].dt.strftime('%Y-%m-%d').to_json(orient='records')
-    #labels = time.ctime(labels)
-    #labels = json.loads(json_data)
-    #data = []
-    # labels.append(forecast[['ds']])
-    # data.append(forecast[['yhat']])
+    labels = forecast['ds'].dt.strftime(
+        '%Y-%m-%d').to_json(orient='records')
     context = {
         "data": data_json,
         'yhat': yhat,

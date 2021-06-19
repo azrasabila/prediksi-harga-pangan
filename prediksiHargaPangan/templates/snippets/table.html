@@ -12,10 +12,10 @@
     <tbody>
       {% if data %} {% for i in data %}
       <tr>
-        <td>Rp.{{i.ds}},00</td>
-        <td>Rp.{{i.yhat}},00</td>
-        <td>Rp.{{i.yhat_lower}},00</td>
-        <td>Rp.{{i.yhat_upper}},00</td>
+        <td>{{i.ds}}</td>
+        <td>Rp. {{i.yhat}},00</td>
+        <td>Rp. {{i.yhat_lower}},00</td>
+        <td>Rp. {{i.yhat_upper}},00</td>
       </tr>
       {% endfor %} {% endif %}
     </tbody>

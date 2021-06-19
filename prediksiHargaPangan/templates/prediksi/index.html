@@ -1,48 +1,56 @@
-{% load static %}
+{% load static %} {% load humanize %} {% load l10n %}
 <!DOCTYPE html>
 <html lang="en">
   {%include "snippets/head.html"%}
   <body>
+  {% localize on %}
     <div class="container">
       <h1>Hasil prediksi komoditas {{commodity_name}}</h1>
-      {%include "snippets/tabs.html"%}
-      <div class="tab-content" id="myTabContent">
-        <div
-          class="tab-pane fade show active"
-          id="chart"
-          role="tabpanel"
-          aria-labelledby="chart-tab"
-        >
-          <canvas id="myChartline"></canvas>
+      <div class="row align-items-start">
+        <div class="col-2">
+          {%include "snippets/tabs.html"%}
         </div>
-        <div
-          class="tab-pane fade"
-          id="table"
-          role="tabpanel"
-          aria-labelledby="table-tab"
-        >
-          {%include "snippets/table.html"%}
-        </div>
-        <div
-          class="tab-pane fade"
-          id="akurasi"
-          role="tabpanel"
-          aria-labelledby="akurasi-tab"
-        >
-          {%include "snippets/akurasi.html"%}
-        </div>
-        <div
-          class="tab-pane fade"
-          id="raw"
-          role="tabpanel"
-          aria-labelledby="raw-tab"
-        >
-          <div>{{forecast.ds}}</div>
+        <div class="col">
+          <div class="tab-content" id="v-pills-TabContent">
+            <div
+              class="tab-pane fade show active"
+              id="v-pills-chart"
+              role="tabpanel"
+              aria-labelledby="v-pills-chart-tab"
+            >
+              <canvas id="myChartline"></canvas>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-table"
+              role="tabpanel"
+              aria-labelledby="v-pills-table-tab"
+            >
+              {%include "snippets/table.html"%}
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-akurasi"
+              role="tabpanel"
+              aria-labelledby="v-pills-akurasi-tab"
+            >
+              {%include "snippets/akurasi.html"%}
+            </div>
+            <div
+              class="tab-pane fade"
+              id="v-pills-raw"
+              role="tabpanel"
+              aria-labelledby="v-pills-raw-tab"
+            >
+              <div>{{forecast.ds}}</div>
+            </div>
+          </div>
         </div>
       </div>
     {%include "snippets/scripts.html"%}
     <script>
       drawLineGraph({{yhat|safe}}, {{labels|safe}}, {{yhat_lower|safe}}, {{yhat_upper|safe}}, 'myChartline');
     </script>
+    {% endlocalize %}
   </body>
 </html>
