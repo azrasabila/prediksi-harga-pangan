@@ -5,11 +5,13 @@
   <body>
     <div class="container">
       <h1>Selamat Datang di Aplikasi Prediksi Harga Pangan</h1>
-      <form method="post">
-        {% csrf_token %} {{commodityForm}}
-        <button class="btn btn-primary" type="submit">Prediksi</button>
-      </form>
-      <h2>{{id_foreign}}</h2>
+      <div class="form-group">
+        <form method="post">
+          {% csrf_token %} {{commodityForm.pilih_komoditas.label_tag}}
+          {{commodityForm.pilih_komoditas}}
+          <button class="btn btn-primary" type="submit">Prediksi</button>
+        </form>
+      </div>
     </div>
     {%include "snippets/scripts.html"%}
   </body>

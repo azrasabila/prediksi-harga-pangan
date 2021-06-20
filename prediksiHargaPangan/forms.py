@@ -1,12 +1,23 @@
 from django import forms
-from .models import *
+from .models import Komoditas
 
 
 class CommodityForm(forms.Form):
-    komoditas = (
-        (3, 'Bawang Merah'),
-        (18, 'Cabe Rawit Merah'),
-        (8, 'Gula Pasir')
-    )
-    # print(komoditas)
-    pilih_komoditas = forms.ChoiceField(choices=komoditas)
+    komoditas_list = Komoditas.objects.all()
+    komoditas = []
+    for i in Komoditas.objects.all():
+        komoditas.append((i.ID_FOREIGN_KOMODITAS, i.NAMA_KOMODITAS))
+    print(komoditas)
+    pilih_komoditas = forms.ChoiceField(choices=komoditas,
+                                        widget=forms.Select(
+                                            attrs={
+                                                'class': 'form-select col-sm-2'
+                                            }
+                                        )
+                                        )
+
+    class Meta:
+        Model = Komoditas
+        fields = [
+            "ID_FOREIGN_KOMODITAS", "NAMA_KOMODITAS"
+        ]
