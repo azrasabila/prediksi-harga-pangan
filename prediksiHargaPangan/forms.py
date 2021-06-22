@@ -7,7 +7,6 @@ class CommodityForm(forms.Form):
     komoditas = []
     for i in Komoditas.objects.all():
         komoditas.append((i.ID_FOREIGN_KOMODITAS, i.NAMA_KOMODITAS))
-    print(komoditas)
     pilih_komoditas = forms.ChoiceField(choices=komoditas,
                                         widget=forms.Select(
                                             attrs={

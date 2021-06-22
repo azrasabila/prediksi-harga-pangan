@@ -8,14 +8,47 @@ from datetime import date
 from math import sqrt
 from sklearn.metrics import mean_squared_error
 
+from .models import Harga, Komoditas, Wilayah
+
 
 def get_data(id_komoditas):
     today = date.today()
+    komoditas = Komoditas.objects.get(ID_FOREIGN_KOMODITAS=id_komoditas)
+    wilayah = Wilayah.objects.get(ID_FOREIGN_WILAYAH=1)
     url = 'http://dev.priangan.org/api/api/graphic_data/' + str(id_komoditas) + \
         '/1/day/price/2009-01-01/' + \
         str(today.strftime("%Y-%m-%d")) + '/0/city/-/eceran/null'
+
     res = requests.get(url)
     data = res.json()
+    df = data['data'][0]['result']
+
+    data2 = Harga.objects.filter(
+        ID_KOMODITAS=komoditas).values('HARGA', 'TANGGAL')
+
+    df = pd.DataFrame.from_dict(df)
+    data2 = pd.DataFrame.from_dict(data2)
+
+    df = df.drop(['time', 'span'], axis=1)
+    df = df.rename(columns={'value': 'HARGA', 'date': 'TANGGAL'})
+    df = df.astype({'HARGA': 'int64'})
+    #compare = pd.merge(data2, df, indicator=False, how='inner')
+    compare = pd.concat([data2, df])
+    compare = compare.drop_duplicates(subset=['INDEX'])
+
+    print(df)
+    print(data2)
+    print(compare)
+
+    # for i in df:
+    #     harga = i['value']
+    #     tanggal = i['date']
+    #     Harga.objects.create(
+    #         HARGA=harga,
+    #         TANGGAL=tanggal,
+    #         ID_KOMODITAS=komoditas,
+    #         ID_WILAYAH=wilayah
+    #     )
     return data
 
 

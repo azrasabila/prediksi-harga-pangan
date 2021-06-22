@@ -19,7 +19,6 @@ def index(request):
     context = {
         'commodityForm': commodityForm
     }
-    print(request.POST)
 
     if request.method == 'POST':
         context['id_foreign'] = request.POST['pilih_komoditas']
@@ -33,30 +32,27 @@ def dashboard(request):
 
 
 def prediksi(request, id_foreign):
+    commodityForm = CommodityForm()
     # ambil data dari services
-    data = get_data(id_foreign)
-    # ambil result
-    df = data['data'][0]['result']
-    commodity_name = data['data'][0]['commodity_name']
-    # convert ke dataframe
-    df = pd.DataFrame(df, columns=['value', 'time', 'date', 'span'])
-    # data preprocessing
-    df.drop(['time', 'span'], axis=1, inplace=True)
+    df = get_data(id_foreign)
+    commodity_name = df['data'][0]['commodity_name']
+    df = df['data'][0]['result']
+    df = pd.DataFrame(df, columns=['value', 'date'])
     df.columns = ['y', 'ds']
     # ubah index jadi tanggal dengan format datetime
     df.ds = pd.to_datetime(df.ds)
     df.index = pd.to_datetime(df.ds)
     df.y = df['y'].astype(np.int64)
-    # drop nilai 0 kalo pake MAPE
-    df = drop_zero(df)
     # bikin nilai carrying capacity
     df['cap'] = df['y'].mean()
+    # drop nilai 0 kalo pake MAPE
+    df = drop_zero(df)
     # split data training dan testing 80:20
     df_train = df[:int(df.shape[0]*0.8)]
     df_test = df[int(df.shape[0]*0.8):]
     # resampling = fill tanggal yang ke skip
-    df_train = df_train.resample('D').pad()
-    df_train['ds'] = df_train.index
+    #df_train = df_train.resample('D').pad()
+    #df_train['ds'] = df_train.index
     # fitting model
     m = Prophet(growth='logistic')
     m.add_country_holidays(country_name='ID')
@@ -74,7 +70,6 @@ def prediksi(request, id_foreign):
     #    '%Y-%m-%d'), forecast['yhat'], forecast['yhat_upper'], forecast['yhat_lower']}.to_json(orient='records')
     data_json = forecast[['ds', 'yhat', 'yhat_upper',
                           'yhat_lower']].to_json(orient='records', date_format='iso', double_precision=0)
-    print(data_json)
     yhat = forecast['yhat'].to_json(orient='records')
     yhat_lower = forecast['yhat_lower'].to_json(orient='records')
     yhat_upper = forecast['yhat_upper'].to_json(orient='records')
@@ -95,6 +90,10 @@ def prediksi(request, id_foreign):
         'commodity_name': commodity_name,
         'mape': mape,
         'akurasi': 100-mape,
-        'rmse': rmse
+        'rmse': rmse,
+        'commodityForm': commodityForm
     }
+    if request.method == 'POST':
+        context['id_foreign'] = request.POST['pilih_komoditas']
+        return redirect('/prediksi/' + request.POST['pilih_komoditas'], )
     return render(request, "prediksi/index.html", context)

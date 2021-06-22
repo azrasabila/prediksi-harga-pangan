@@ -34,11 +34,10 @@ class Harga(models.Model):
     HARGA = models.IntegerField()
     TANGGAL = models.DateField()
     ID_KOMODITAS = models.ForeignKey(
-        Komoditas, default=0,  on_delete=models.CASCADE)
+        Komoditas, related_name='ID_KOMODITAS', default=1,  on_delete=models.CASCADE)
     ID_WILAYAH = models.ForeignKey(
-        Wilayah, default=0, on_delete=models.CASCADE)
+        Wilayah, related_name='ID_WILAYAH', default=1, on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'harga'
         #managed = False
-        unique_together = (('HARGA', 'TANGGAL'))
