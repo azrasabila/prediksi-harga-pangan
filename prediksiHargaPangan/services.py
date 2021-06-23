@@ -23,32 +23,47 @@ def get_data(id_komoditas):
     data = res.json()
     df = data['data'][0]['result']
 
-    data2 = Harga.objects.filter(
+    df_db = Harga.objects.filter(
         ID_KOMODITAS=komoditas).values('HARGA', 'TANGGAL')
 
+    df_db = pd.DataFrame.from_dict(df_db)
     df = pd.DataFrame.from_dict(df)
-    data2 = pd.DataFrame.from_dict(data2)
 
     df = df.drop(['time', 'span'], axis=1)
     df = df.rename(columns={'value': 'HARGA', 'date': 'TANGGAL'})
     df = df.astype({'HARGA': 'int64'})
-    #compare = pd.merge(data2, df, indicator=False, how='inner')
-    compare = pd.concat([data2, df])
-    compare = compare.drop_duplicates(subset=['INDEX'])
+    print(len(df))
+    print(len(df_db))
 
-    print(df)
-    print(data2)
-    print(compare)
+    if len(df) > len(df_db) and len(df_db) > 0:
 
-    # for i in df:
-    #     harga = i['value']
-    #     tanggal = i['date']
-    #     Harga.objects.create(
-    #         HARGA=harga,
-    #         TANGGAL=tanggal,
-    #         ID_KOMODITAS=komoditas,
-    #         ID_WILAYAH=wilayah
-    #     )
+        print('masuk sana')
+        compare = df
+        compare['HARGA_DF'] = df_db['HARGA']
+        compare = compare[compare['HARGA_DF'].isna()]
+        print(compare)
+
+        if len(compare) > 0:
+            for index, row in compare.iterrows():
+                harga = row['HARGA']
+                tanggal = row['TANGGAL']
+                Harga.objects.create(
+                    HARGA=harga,
+                    TANGGAL=tanggal,
+                    ID_KOMODITAS=komoditas,
+                    ID_WILAYAH=wilayah
+                )
+    elif len(df_db) == 0:
+        print('masuk sini')
+        for index, row in df.iterrows():
+            harga = row['HARGA']
+            tanggal = row['TANGGAL']
+            Harga.objects.create(
+                HARGA=harga,
+                TANGGAL=tanggal,
+                ID_KOMODITAS=komoditas,
+                ID_WILAYAH=wilayah
+            )
     return data
 
 

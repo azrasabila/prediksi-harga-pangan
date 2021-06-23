@@ -31,8 +31,8 @@ class Komoditas(models.Model):
 
 class Harga(models.Model):
     id = models.AutoField(primary_key=True)
-    HARGA = models.IntegerField()
-    TANGGAL = models.DateField()
+    HARGA = models.IntegerField(unique=False)
+    TANGGAL = models.DateField(unique=False)
     ID_KOMODITAS = models.ForeignKey(
         Komoditas, related_name='ID_KOMODITAS', default=1,  on_delete=models.CASCADE)
     ID_WILAYAH = models.ForeignKey(
