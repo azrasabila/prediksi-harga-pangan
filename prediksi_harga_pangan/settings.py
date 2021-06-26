@@ -131,6 +131,8 @@ USE_THOUSAND_SEPARATOR = True
 
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/images/'
+
 STATICFILES_URL = [
     os.path.join(BASE_DIR, 'static'),
 ]

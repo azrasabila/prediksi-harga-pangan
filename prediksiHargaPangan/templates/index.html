@@ -3,16 +3,276 @@
 <html lang="en">
   {%include "snippets/head.html"%}
   <body>
-    <div class="container">
-      <h1>Selamat Datang di Aplikasi Prediksi Harga Pangan</h1>
-      <div class="form-group">
-        <form method="post">
-          {% csrf_token %} {{commodityForm.pilih_komoditas.label_tag}}
-          {{commodityForm.pilih_komoditas}}
-          <button class="btn btn-primary" type="submit">Prediksi</button>
-        </form>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-inverse shadow-sm" id="mainNav">
+      <div class="navbar-nav px-5">
+        <img data-src="{% static 'images/padi-removebg-preview.png' %}" href="#prediksi" height="30" width="31" style="padding-left: 10px;">
+          <a class="navbar-brand fw-bold" href="#prediksi">SI LAHAP DI BANDUNG</a>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                  <li class="nav-item" style="position: absolute;
+                  top: 8px;
+                  right: 16px;
+                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Home</a></li>
+                  <span class="vertical-line"></span>
+                  <li class="nav-item mx-0 mx-lg-1" style="position: absolute;
+                  top: 8px;
+                  right: 100px;
+                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Prediksi</a></li>
+              </ul>
+          </div>
+      </div>
+    </nav>
+    <!-- Side Navigation -->
+    <div class="sidenav">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body center">
+          <b class="card-title center" style="font-size: 25px; ">Pilih Komoditas</b>
+          <!-- {% csrf_token %} {{commodityForm.pilih_komoditas.label_tag}} -->
+          <div class="pilihkomoditas">
+            {{commodityForm.pilih_komoditas}}
+          </div>
+          <button class="btn btn-primary center" type="submit">Prediksi</button>
+        </div>
+      </div>
+      <div class="sidenav-footer">
+        <div class="small">Copyright ©2021 KoTA-312</div>
       </div>
     </div>
+    <!-- Content -->
+    <div class="container">
+      <h1>Selamat Datang, </h1>
+      <h2>Di Website Prediksi Harga Pangan Di Kota Bandung</h2>
+      <div class="row" style="margin-top: 75px;">
+        <div class="col">
+          <span class="horizontal-line"></span>
+          <h3 class="tagline-first">Ayo Ketahui Harga Prediksi Komoditas Pangan Di Kota Bandung</h3>
+          <span class="horizontal-line"></span>
+          <h3 class="tagline-second">Pedagang paham, harga stabil</h3>
+          <span class="horizontal-line"></span>
+        </div>
+        <div class="col">
+          <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="padding-left: 10px; margin-bottom: 75px;">
+        </div>
+      </div>
+    </div>
+    <!-- Silahap Section-->
+    <section class="page-section bg-abu text-black mb-0" id="about">
+      <div class="container">
+          <!-- Silahap Section Heading-->
+          <h2 class="page-section-heading text-uppercase text-black" style="padding: 40px 40px;">Apa itu SI LAHAP?</h2>
+          <!-- Icon Divider-->
+          <span class="horizontal-line"></span>
+          <!-- Silahap Section Content-->
+          <div class="row">
+              <div class="col-sm-4">
+                <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+              </div>
+              <div class="col-sm-8" style="max-width: 30%;">
+                <p class="lead">SILAHAP merupakan aplikasi berbasis website yang dapat memprediksi harga 10 komoditas pangan utama yang ada di kota Bandung. Tujuannya untuk memberikan informasi kepada pedagang maupun masyarakat dalam memantau harga pangan agar pedagang dapat berperan dalam mengendalikan inflasi pangan di suatu daerah.</p>
+              </div>
+          </div>
+      </div>
+    </section>
+    <!-- Inflasi Section-->
+    <section class="page-section text-black mb-0" id="about">
+      <div class="container">
+          <h2 class="page-section-heading text-uppercase text-black" style="padding: 40px 40px;">Inflasi dan Deflasi</h2>
+          <!-- Icon Divider-->
+          <span class="horizontal-line"></span>
+          <!-- inflasi Section Content-->
+          <div class="row">
+              <div class="col-sm-8" style="max-width: 50%;">
+                <p class="lead">Inflasi dapat diartikan sebagai kenaikan harga barang dan jasa secara umum dan terus menerus dalam jangka waktu tertentu. Deflasi merupakan kebalikan dari inflasi, yakni penurunan harga barang secara umum dan terus menerus.</p>
+              </div>
+              <div class="col-sm-4">
+                <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+              </div>
+          </div>
+      </div>
+    </section>
+    <!-- Metode Section-->
+    <section class="page-section bg-abu text-black mb-0" id="about">
+      <div class="container">
+          <!-- Metode Section Heading-->
+          <h2 class="page-section-heading text-uppercase text-black" style="padding: 40px 40px;">Metode Prediksi</h2>
+          <!-- Icon Divider-->
+          <span class="horizontal-line"></span>
+          <!-- Metode Section Content-->
+          <div class="row">
+              <div class="col-sm-4">
+                <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+              </div>
+              <div class="col-sm-8" style="max-width: 30%;">
+                <p class="lead">Menggunakan prediksi dengan menggunakan algoritma Prophet dengan memperhatikan 3 komponen utama, yaitu trend, seasonality, dan holidays. Metode ini sangat cocok digunakan untuk data yang bersifat timeseries dalam jangka waktu data yang panjang dengan menjanjikan akurasi prediksi yang cukup baik.</p>
+              </div>
+          </div>
+      </div>
+    </section>
+    <!-- Data Section-->
+    <section class="page-section text-black mb-0" id="about">
+      <div class="container">
+          <!-- Metode Section Heading-->
+          <h2 class="page-section-heading text-uppercase text-black" style="padding: 40px 40px;">Sumber Data</h2>
+          <!-- Icon Divider-->
+          <span class="horizontal-line"></span>
+          <!-- Metode Section Content-->
+          <div class="row">
+              <div class="col-sm-4">
+                <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+              </div>
+              <div class="col-sm-4" style="max-width: 30%;">
+                <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+            </div>
+            <div class="col-sm-4" style="max-width: 30%;">
+              <img data-src="{% static 'images/pangan.jpeg' %}" href="#prediksi" height="300" width="310" style="margin-top: 20px;">
+            </div>
+        </div>
+      </div>
+    </section>
     {%include "snippets/scripts.html"%}
   </body>
 </html>
+
+
+<style type="text/css">
+
+body {
+  background-image: url("{% static 'images/bgsilahap.jpg' %}");
+}
+
+  .nav-link {
+    color: #000000;
+  }
+
+  .nav-link:hover{
+    color: white;
+    background-color: #4CAF50;
+  }
+
+  .nav-link:focus{
+    color: black;
+  }
+
+  .container{
+    margin-left: 25%;
+    margin-top: 75px;
+  }
+
+  .gambar-pangan{
+    margin-left: 50%;
+  }
+  
+  .navbar-inverse {
+    background-color: #099220;
+    font-size:18px;
+    height: 75px;
+  }
+  
+  .navbar-brand {
+    color: #b7c400;
+  }
+
+  .navbar-brand:hover {
+    color: #9ba516;
+  }
+
+  .sidenav {
+			height:100%;
+			width:25%;
+			position: fixed;
+			z-index:1;
+			top:10;
+			left:0;
+			background:#e2bf7e;
+			overflow-x: hidden;
+			padding-top:20px;
+		}
+
+  .card{
+    top: 25%;
+    /* height:40%; */
+    background-color: #b7c400;
+    border-radius: 25px;
+    left: 25px;
+  }
+
+  .sidenav-footer {
+    padding: 0.75rem;
+    flex-shrink: 0; 
+    background-color: #343a40;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 25%;
+  }
+
+  .pilihkomoditas{
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+
+  small, .small {
+    font-size: 0.875em;
+    color: #f5f5dc;
+  }
+
+  .vertical-line{
+    display: inline-block;
+    border-left: 3px solid black;
+    margin: 0 10px;
+    height: 50px;
+    position: absolute;
+    top: 8px;
+    right: 88px;
+    font-size: 18px;
+  }
+
+  .horizontal-line{
+    display: inline-block;
+    border-left: 300px solid green;
+    margin: 0 10px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    font-size: 18px;
+  }
+
+  .bg-abu{
+    background-color: grey;
+  }
+
+  .page-section{
+    height: 600px;
+    max-height: 600px;
+  }
+
+  .center {
+    margin: auto;
+    padding: 10px;
+    text-align: center;
+  }
+
+.tagline-first{
+  column-width: 50%;
+  max-width: 60%;
+  margin-bottom: 25px;
+}
+
+.tagline-second{
+  column-width: 50%;
+  max-width: 45%;
+  margin-top: 50px;
+  margin-bottom: 25px;
+}
+</style>

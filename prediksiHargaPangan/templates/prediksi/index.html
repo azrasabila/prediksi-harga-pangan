@@ -3,31 +3,45 @@
 <html lang="en">
   {%include "snippets/head.html"%}
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Aplikasi Prediksi Harga Pangan</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="/">Home</a>
-            </li>
-            <li>
-              <form method="post" class="d-flex">
-                {% csrf_token %} 
-                {{commodityForm.pilih_komoditas}}
-                <button class="btn btn-primary" type="submit">Prediksi</button>
-              </form>
-            </li>
-          </ul>
-        </div>
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg fixed-top navbar-inverse shadow-sm" id="mainNav">
+      <div class="navbar-nav px-5">
+        <img data-src="{% static 'images/padi-removebg-preview.png' %}" href="#prediksi" height="30" width="31" style="padding-left: 10px;">
+          <a class="navbar-brand fw-bold" href="#prediksi">SI LAHAP DI BANDUNG</a>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+              <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
+                  <li class="nav-item" style="position: absolute;
+                  top: 8px;
+                  right: 16px;
+                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Home</a></li>
+                  <span class="vertical-line"></span>
+                  <li class="nav-item mx-0 mx-lg-1" style="position: absolute;
+                  top: 8px;
+                  right: 100px;
+                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Prediksi</a></li>
+              </ul>
+          </div>
       </div>
     </nav>
+    <!-- Side Navigation -->
+    <div class="sidenav">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body center">
+          <b class="card-title center" style="font-size: 25px; ">Pilih Komoditas</b>
+          <!-- {% csrf_token %} {{commodityForm.pilih_komoditas.label_tag}} -->
+          <div class="pilihkomoditas">
+            {{commodityForm.pilih_komoditas}}
+          </div>
+          <button class="btn btn-primary center" type="submit">Prediksi</button>
+        </div>
+      </div>
+      <div class="sidenav-footer">
+        <div class="small">Copyright ©2021 KoTA-312</div>
+      </div>
+    </div>
   {% localize on %}
     <div class="container">
-      <h3>Hasil prediksi harga komoditas {{commodity_name}}</h3>
+      <h3 class="center">Hasil prediksi harga komoditas {{commodity_name}}</h3>
       <div class="row align-items-start">
         <div class="col-2">
           {%include "snippets/tabs.html"%}
@@ -72,7 +86,116 @@
     {%include "snippets/scripts.html"%}
     <script>
       drawLineGraph({{yhat|safe}}, {{labels|safe}}, {{yhat_lower|safe}}, {{yhat_upper|safe}}, 'myChartline');
+      
     </script>
     {% endlocalize %}
   </body>
 </html>
+
+<style>
+  .navbar-container{
+    width: 100%;
+    padding-right: var(--bs-gutter-x, 0.75rem);
+    padding-left: var(--bs-gutter-x, 0.75rem);
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  .nav-link {
+    color: #000000;
+  }
+
+  .nav-link:hover{
+    color: white;
+    background-color: #4CAF50;
+  }
+
+  .nav-link:focus{
+    color: black;
+  }
+
+  .navbar-inverse {
+  background-color: #099220;
+  font-size:18px;
+  height: 75px;
+  }
+
+  .navbar-brand {
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    text-decoration: none;
+    white-space: nowrap;
+    color: #b7c400;
+    /* margin-right: 80%; */
+  }
+
+  .navbar-brand:hover {
+    color: #b7c21a;
+  }
+
+  .sidenav {
+			height:100%;
+			width:25%;
+			position: fixed;
+			z-index:1;
+			top:10;
+			left:0;
+			background:#e2bf7e;
+			overflow-x: hidden;
+			padding-top:20px;
+      flex-shrink: 0; 
+		}
+
+  .card{
+    top: 25%;
+    /* height:40%; */
+    background-color: #b7c400;
+    border-radius: 25px;
+    left: 25px;
+  }
+
+  .pilihkomoditas{
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
+  
+  .sidenav-footer {
+    padding: 0.75rem;
+    flex-shrink: 0; 
+    background-color: #343a40;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 25%;
+  }
+
+  small, .small {
+    font-size: 0.875em;
+    color: #f5f5dc;
+  }
+
+.vertical-line{
+  display: inline-block;
+  border-left: 3px solid black;
+  margin: 0 10px;
+  height: 50px;
+  position: absolute;
+  top: 8px;
+  right: 88px;
+  font-size: 18px;
+}
+
+  .container{
+    margin-left: 25%;
+    margin-top: 75px;
+  }
+
+  .center {
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+}
+
+</style>
