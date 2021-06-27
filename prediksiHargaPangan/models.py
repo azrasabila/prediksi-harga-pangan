@@ -38,6 +38,9 @@ class Harga(models.Model):
     ID_WILAYAH = models.ForeignKey(
         Wilayah, related_name='ID_WILAYAH', default=1, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return "{} - {} : {}".format(self.ID_KOMODITAS, self.TANGGAL, self.HARGA)
+
     class Meta:
         db_table = 'harga'
         #managed = False

@@ -7,11 +7,12 @@ import json
 from datetime import date
 from math import sqrt
 from sklearn.metrics import mean_squared_error
+from django.contrib import messages
 
 from .models import Harga, Komoditas, Wilayah
 
 
-def get_data(id_komoditas):
+def get_data(request, id_komoditas):
     today = date.today()
     komoditas = Komoditas.objects.get(ID_FOREIGN_KOMODITAS=id_komoditas)
     wilayah = Wilayah.objects.get(ID_FOREIGN_WILAYAH=1)
@@ -53,6 +54,8 @@ def get_data(id_komoditas):
                     ID_KOMODITAS=komoditas,
                     ID_WILAYAH=wilayah
                 )
+            messages.success(
+                request, "Data terbaru berhasil ditambahkan ke database.")
     elif len(df_db) == 0:
         print('masuk sini')
         for index, row in df.iterrows():
@@ -64,6 +67,8 @@ def get_data(id_komoditas):
                 ID_KOMODITAS=komoditas,
                 ID_WILAYAH=wilayah
             )
+        messages.success(
+            request, "Data terbaru berhasil ditambahkan ke database.")
     return data
 
 

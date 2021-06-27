@@ -34,7 +34,7 @@ def dashboard(request):
 def prediksi(request, id_foreign):
     commodityForm = CommodityForm()
     # ambil data dari services
-    df = get_data(id_foreign)
+    df = get_data(request, id_foreign)
     commodity_name = df['data'][0]['commodity_name']
     df = df['data'][0]['result']
     df = pd.DataFrame(df, columns=['value', 'date'])
