@@ -1,4 +1,8 @@
 {%load static%}
-<div>RMSE : {{rmse}}</div>
-<div>MAPE : {{mape}}</div>
-<div>Akurasi : {{akurasi}}</div>
+<div class="card">
+    <div class="card-body">
+        <h5>Akurasi : {{akurasi|floatformat:2}}%</h5>
+        <span>RMSE : {{rmse|floatformat:2}}</span>
+        <span>MAPE : {{mape|floatformat:2}}</span>
+    </div>
+</div>

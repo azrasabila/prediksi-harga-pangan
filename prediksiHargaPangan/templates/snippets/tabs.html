@@ -1,57 +1,28 @@
 {% load static %}
 <div class="d-flex align-items-start">
-  <div
-    class="nav flex-column nav-pills me-3"
-    id="v-pills-tab"
-    role="tablist"
-    aria-orientation="vertical"
-  >
-    <button
-      class="nav-link active"
-      id="v-pills-chart-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#v-pills-chart"
-      type="button"
-      role="tab"
-      aria-controls="v-pills-chart"
-      aria-selected="true"
-    >
-      Chart
+  <div class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <button class="nav-link" id="v-pills-chart-tab" data-bs-toggle="pill" data-bs-target="#v-pills-chart" type="button"
+      role="tab" aria-controls="v-pills-chart_week" aria-selected="false">
+      Mingguan
     </button>
-    <button
-      class="nav-link"
-      id="v-pills-table-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#v-pills-table"
-      type="button"
-      role="tab"
-      aria-controls="v-pills-table"
-      aria-selected="false"
-    >
+    <button class="nav-link" id="v-pills-chart-tab" data-bs-toggle="pill" data-bs-target="#v-pills-chart" type="button"
+      role="tab" aria-controls="v-pills-chart_month" aria-selected="false">
+      Bulanan
+    </button>
+    <button class="nav-link active" id="v-pills-chart-tab" data-bs-toggle="pill" data-bs-target="#v-pills-chart"
+      type="button" role="tab" aria-controls="v-pills-chart" aria-selected="true">
+      Kuartal
+    </button>
+    <button class="nav-link" id="v-pills-table-tab" data-bs-toggle="pill" data-bs-target="#v-pills-table" type="button"
+      role="tab" aria-controls="v-pills-table" aria-selected="false">
       Table
     </button>
-    <button
-      class="nav-link"
-      id="v-pills-akurasi-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#v-pills-akurasi"
-      type="button"
-      role="tab"
-      aria-controls="v-pills-akurasi"
-      aria-selected="false"
-    >
+    <button class="nav-link" id="v-pills-akurasi-tab" data-bs-toggle="pill" data-bs-target="#v-pills-akurasi"
+      type="button" role="tab" aria-controls="v-pills-akurasi" aria-selected="false">
       Akurasi
     </button>
-    <button
-      class="nav-link"
-      id="v-pills-raw-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#v-pills-raw"
-      type="button"
-      role="tab"
-      aria-controls="v-pills-raw"
-      aria-selected="false"
-    >
+    <button class="nav-link" id="v-pills-raw-tab" data-bs-toggle="pill" data-bs-target="#v-pills-raw" type="button"
+      role="tab" aria-controls="v-pills-raw" aria-selected="false">
       Raw Data
     </button>
   </div>

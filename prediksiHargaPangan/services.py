@@ -33,16 +33,12 @@ def get_data(request, id_komoditas):
     df = df.drop(['time', 'span'], axis=1)
     df = df.rename(columns={'value': 'HARGA', 'date': 'TANGGAL'})
     df = df.astype({'HARGA': 'int64'})
-    print(len(df))
-    print(len(df_db))
 
     if len(df) > len(df_db) and len(df_db) > 0:
 
-        print('masuk sana')
         compare = df
         compare['HARGA_DF'] = df_db['HARGA']
         compare = compare[compare['HARGA_DF'].isna()]
-        print(compare)
 
         if len(compare) > 0:
             for index, row in compare.iterrows():
@@ -57,7 +53,6 @@ def get_data(request, id_komoditas):
             messages.success(
                 request, "Data terbaru berhasil ditambahkan ke database.")
     elif len(df_db) == 0:
-        print('masuk sini')
         for index, row in df.iterrows():
             harga = row['HARGA']
             tanggal = row['TANGGAL']
