@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -131,7 +131,15 @@ USE_THOUSAND_SEPARATOR = True
 
 STATIC_URL = '/static/'
 
+STATIC_ROOT = ''
+
 MEDIA_URL = '/images/'
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/'),
