@@ -1,11 +1,10 @@
 {%load static%}
-<div class="card">
-    <div class="card-body col">
+<div class="card" style="height: 100%;">
+  <div class="card-body">
     {% if today %} {% for i in today %}
-      <h5>Prediksi hari ini</h5>
-        <span>{{i.yhat|floatformat:0}}</span>
-        <span>Batas Atas : {{i.yhat_upper|floatformat:0}}</span>
-        <span>Batas Bawah : {{i.yhat_lower|floatformat:0}}</span>
-      {% endfor %} {% endif %}
-    </div>
+    <h5 class="card-title">Prediksi harga hari ini {{i.yhat|floatformat:0}}</h5>
+    <p class="card-text">Batas Atas : {{i.yhat_upper|floatformat:0}}<br>Batas Bawah : {{i.yhat_lower|floatformat:0}}</p>
+    <p class="card-text"></p>
+    {% endfor %} {% endif %}
+  </div>
 </div>

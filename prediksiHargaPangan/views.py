@@ -35,8 +35,6 @@ def dashboard(request):
 def prediksi(request, id_foreign):
     commodityForm = CommodityForm()
     now = date.today()
-    print(now)
-    print(now+timedelta(1))
     # ambil data dari services
     df = get_data(request, id_foreign)
     commodity_name = df['data'][0]['commodity_name']
@@ -71,6 +69,10 @@ def prediksi(request, id_foreign):
                       == pd.to_datetime(now))]
     tomorrow = forecast[(pd.to_datetime(forecast["ds"])
                          == pd.to_datetime(now+timedelta(1)))]
+    week = prediksi[(pd.to_datetime(forecast["ds"])
+                     <= pd.to_datetime(now+timedelta(7)))]
+    month = prediksi[(pd.to_datetime(forecast["ds"])
+                      <= pd.to_datetime(now+timedelta(30)))]
     # split training data
     df_test = df[int(df.shape[0]*0.8):]
     y_true = df[int(df.shape[0]*0.8):]
@@ -81,17 +83,29 @@ def prediksi(request, id_foreign):
     # itung rmse
     rmse = root_mean_square_err(y_true=np.asarray(
         y_true['y']), y_pred=np.asarray(y_pred['yhat']))
-    # convert ke JSON
+    # data table
     data_json = prediksi[['ds', 'yhat', 'yhat_upper',
                           'yhat_lower']].to_json(orient='records', date_format='iso', double_precision=0)
+    data_json = json.loads(data_json)
+    # data kuartal
     yhat = prediksi['yhat'].to_json(orient='records')
     yhat_lower = prediksi['yhat_lower'].to_json(orient='records')
     yhat_upper = prediksi['yhat_upper'].to_json(orient='records')
-    print(data_json)
-    data_json = json.loads(data_json)
-    print(data_json)
     labels = prediksi['ds'].dt.strftime(
         '%d-%m-%Y').to_json(orient='records')
+    # data weekly
+    yhat_week = week['yhat'].to_json(orient='records')
+    yhat_lower_week = week['yhat_lower'].to_json(orient='records')
+    yhat_upper_week = week['yhat_upper'].to_json(orient='records')
+    labels_week = week['ds'].dt.strftime(
+        '%d-%m-%Y').to_json(orient='records')
+    # data bulanan
+    yhat_month = month['yhat'].to_json(orient='records')
+    yhat_lower_month = month['yhat_lower'].to_json(orient='records')
+    yhat_upper_month = month['yhat_upper'].to_json(orient='records')
+    labels_month = month['ds'].dt.strftime(
+        '%d-%m-%Y').to_json(orient='records')
+    # print(data_json)
     today = today[['ds', 'yhat', 'yhat_upper',
                    'yhat_lower']].to_json(orient='records', date_format='iso')
     tomorrow = tomorrow[['ds', 'yhat', 'yhat_upper',
@@ -103,11 +117,18 @@ def prediksi(request, id_foreign):
         'yhat': yhat,
         "yhat_lower": yhat_lower,
         "yhat_upper": yhat_upper,
+        'labels': labels,
+        'yhat_week': yhat_week,
+        "yhat_lower_week": yhat_lower_week,
+        "yhat_upper_week": yhat_upper_week,
+        'labels_week': labels_week,
+        'yhat_month': yhat_month,
+        "yhat_lower_month": yhat_lower_month,
+        "yhat_upper_month": yhat_upper_month,
+        'labels_month': labels_month,
         'df': df,
         'today': today,
         'tomorrow': tomorrow,
-        'forecast': forecast[['ds', 'yhat']],
-        'labels': labels,
         'commodity_name': commodity_name,
         'mape': mape,
         'akurasi': 100-mape,

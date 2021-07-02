@@ -1,8 +1,7 @@
 {%load static%}
-<div class="card">
+<div class="card" style="height: 100%;">
     <div class="card-body">
-        <h5>Akurasi : {{akurasi|floatformat:2}}%</h5>
-        <span>RMSE : {{rmse|floatformat:2}}</span>
-        <span>MAPE : {{mape|floatformat:2}}</span>
+        <h5 class="card-title">Akurasi : {{akurasi|floatformat:2}}%</h5>
+        <p class="card-text">RMSE : {{rmse|floatformat:2}}<br>MAPE : {{mape|floatformat:2}}</p>
     </div>
 </div>
