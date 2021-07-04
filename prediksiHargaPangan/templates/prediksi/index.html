@@ -102,6 +102,10 @@
           <div class="tab-pane fade" id="v-pills-table" role="tabpanel" aria-labelledby="v-pills-table-tab">
             {%include "snippets/table.html"%}
           </div>
+          <div class="tab-pane fade" id="v-pills-chart-historical" role="tabpanel"
+            aria-labelledby="v-pills-chart-historical-tab">
+            <canvas id="chart"></canvas>
+          </div>
         </div>
       </div>
     </div>
@@ -110,6 +114,7 @@
       drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
       drawLineGraph({{ yhat_week| safe}}, {{ labels_week| safe}}, {{ yhat_lower_week| safe}}, {{ yhat_upper_week| safe}}, 'myChartline_week');
       drawLineGraph({{ yhat_month| safe}}, {{ labels_month| safe}}, {{ yhat_lower_month| safe}}, {{ yhat_upper_month| safe}}, 'myChartline_month');
+      drawMultiGraph({{ data_df| safe}}, 'chart');
     </script>
     {% endlocalize %}
 </body>

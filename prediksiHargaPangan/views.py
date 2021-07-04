@@ -83,6 +83,13 @@ def prediksi(request, id_foreign):
     # itung rmse
     rmse = root_mean_square_err(y_true=np.asarray(
         y_true['y']), y_pred=np.asarray(y_pred['yhat']))
+    # data forecast
+    data_df = df.to_json(
+        orient='records', double_precision=0)
+    data_df = json.loads(data_df)
+    data_forecast = forecast.to_json(
+        orient='records', double_precision=0)
+    data_forecast = json.loads(data_forecast)
     # data table
     data_json = prediksi[['ds', 'yhat', 'yhat_upper',
                           'yhat_lower']].to_json(orient='records', date_format='iso', double_precision=0)
@@ -114,6 +121,8 @@ def prediksi(request, id_foreign):
     tomorrow = json.loads(tomorrow)
     context = {
         "data": data_json,
+        'data_df': data_df,
+        "data_forecast": data_forecast,
         'yhat': yhat,
         "yhat_lower": yhat_lower,
         "yhat_upper": yhat_upper,
