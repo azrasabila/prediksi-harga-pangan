@@ -84,7 +84,7 @@
 <script>
   function drawMultiGraph(data, id) {
     var labels = data.map(function (e) {
-      return e.ds;
+      return new Date(e.ds).toDateString();
     });
     var y = data.map(function (e) {
       return e.y;
@@ -131,6 +131,11 @@
         },
         scales: {
           x: {
+            type: 'time',
+            time: {
+              parser: 'MM/DD/YYYY',
+              unit: 'day'
+            },
             title: {
               display: true,
               text: 'Month'
