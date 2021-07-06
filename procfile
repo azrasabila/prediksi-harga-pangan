@@ -1,0 +1,1 @@
+web: gunicorn prediksi-harga-pangan.wsgi --log-file -

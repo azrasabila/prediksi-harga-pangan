@@ -5,50 +5,14 @@
 
 <body>
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-inverse" id="mainNav">
-    <div class="collapse navbar-collapse navbar-nav" id="navbarSupportedContent">
-      <img data-src="{% static 'images/padi-removebg-preview.png' %}" href="#prediksi" height="30" width="31"
-        style="padding-left: 10px;">
-      <a class="navbar-brand fw-bold" href="#prediksi">SI LAHAP DI BANDUNG</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <a class="nav-item nav-link" href="/">Home</a>
-        <span class="vertical-line"></span>
-        <a class="nav-item nav-link active" href="#">Prediksi</a>
-      </div>
-    </div>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-inverse shadow-sm" id="mainNav">
+    <a class="navbar-brand fw-bold" href="/">
+      <img src="{% static 'img/binoculars-fill.svg' %}" href="/" height="40" width="75" style="padding-left: 10px;">
+      SILAHAP DI BANDUNG
+    </a>
   </nav>
-  <!-- <nav class="navbar navbar-expand-lg navbar-inverse bg-dark fixed-top shadow-sm" id="mainNav">
-    <div class="navbar-nav px-5">
-      <img data-src="{% static 'images/padi-removebg-preview.png' %}" href="#prediksi" height="30" width="31"
-        style="padding-left: 10px;">
-      <a class="navbar-brand fw-bold" href="#prediksi">SI LAHAP DI BANDUNG</a>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-          <li class="nav-item" style="position: absolute;
-                  top: 8px;
-                  right: 16px;
-                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Home</a></li>
-          <span class="vertical-line"></span>
-          <li class="nav-item mx-0 mx-lg-1" style="position: absolute;
-                  top: 8px;
-                  right: 100px;
-                  font-size: 18px;"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#prediksi">Prediksi</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-  <!-- Side Navigation -->
-  <!-- <div class="sidenav">
-    <div class="sidenav-footer">
-      <div class="small">Copyright ©2021 KoTA-312</div>
-    </div>
-  </div> -->
   {% localize on %}
-  <div class="container">
+  <div class="container" style="margin-top: 6rem;">
     {% if messages %}
     {% for message in messages %}
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -59,20 +23,22 @@
     {% endif %}
     <div class="row">
       <div class="card">
-        <div class="card-body center">
+        <div class="card-body">
           <form method='post'>
-            <b class="card-title center" style="font-size: 25px; ">Pilih Komoditas</b>
             {% csrf_token %}
-            <div class="pilihkomoditas">
+            <h4>Pilih Komoditas</h4>
+            <div class="pilihkomoditas row center">
               {{commodityForm.pilih_komoditas}}
+              <button class="btn btn-success" type="submit">Prediksi</button>
             </div>
-            <button class="btn btn-primary center" type="submit">Prediksi</button>
           </form>
         </div>
       </div>
     </div>
-    <h3>Hasil prediksi harga komoditas {{commodity_name}}</h3>
-    <div class="row">
+    <div class="row" style="margin-top: 2rem;">
+      <h3>Hasil prediksi harga komoditas {{commodity_name}}</h3>
+    </div>
+    <div class="row" style="margin-bottom: 2rem; margin-top: 2rem;">
       <div class="col">
         {%include "snippets/akurasi.html"%}
       </div>
@@ -109,14 +75,23 @@
         </div>
       </div>
     </div>
-    {%include "snippets/scripts.html"%}
-    <script>
-      drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
-      drawLineGraph({{ yhat_week| safe}}, {{ labels_week| safe}}, {{ yhat_lower_week| safe}}, {{ yhat_upper_week| safe}}, 'myChartline_week');
-      drawLineGraph({{ yhat_month| safe}}, {{ labels_month| safe}}, {{ yhat_lower_month| safe}}, {{ yhat_upper_month| safe}}, 'myChartline_month');
-      drawMultiGraph({{ data_df| safe}}, 'chart');
-    </script>
-    {% endlocalize %}
+  </div>
+  <footer class="text-muted py-5 nav-footer">
+    <div class="container">
+      <p class="float-end mb-1">
+        <a href="#">Back to top</a>
+      </p>
+      <div class="small">Copyright ©2021 KoTA-312</div>
+    </div>
+  </footer>
+  {%include "snippets/scripts.html"%}
+  <script>
+    drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
+    drawLineGraph({{ yhat_week| safe}}, {{ labels_week| safe}}, {{ yhat_lower_week| safe}}, {{ yhat_upper_week| safe}}, 'myChartline_week');
+    drawLineGraph({{ yhat_month| safe}}, {{ labels_month| safe}}, {{ yhat_lower_month| safe}}, {{ yhat_upper_month| safe}}, 'myChartline_month');
+    drawMultiGraph({{ data_df| safe}}, 'chart');
+  </script>
+  {% endlocalize %}
 </body>
 
 </html>
@@ -128,6 +103,15 @@
     padding-left: var(--bs-gutter-x, 0.75rem);
     margin-right: auto;
     margin-left: auto;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Montserrat', sans-serif;
   }
 
   .nav-link {
@@ -144,33 +128,22 @@
   }
 
   .navbar-inverse {
-    background-color: #099220;
+    background-color: #009D57;
     font-size: 18px;
     height: 75px;
   }
 
   .navbar-brand {
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
-    text-decoration: none;
-    white-space: nowrap;
-    color: #b7c400;
-    /* margin-right: 80%; */
+    color: #FEC95F;
   }
 
   .navbar-brand:hover {
-    color: #b7c21a;
+    color: #FEC95F;
   }
 
   .card {
-    /* top: 25%; */
-    /* height:40%; */
-    background-color: #b7c400;
-    border-radius: 5px;
-    color: white;
-    /* left: 25px; */
+    background-color: #FEC95F;
+    border-radius: 15px;
   }
 
   .pilihkomoditas {

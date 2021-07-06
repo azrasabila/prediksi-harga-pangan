@@ -1,0 +1,10 @@
+pip freeze > requirements.txt
+
+pystan = "*"
+gunicorn = "*"
+pandas = "*"
+django = "*"
+matplotlib = "*"
+prophet = "*"
+
+python-3.8.5
