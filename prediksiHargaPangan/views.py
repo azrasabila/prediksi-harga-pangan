@@ -114,11 +114,12 @@ def prediksi(request, id_foreign):
         '%d-%m-%Y').to_json(orient='records')
     # print(data_json)
     today = today[['ds', 'yhat', 'yhat_upper',
-                   'yhat_lower']].to_json(orient='records', date_format='iso')
+                   'yhat_lower']].to_json(orient='records')
     tomorrow = tomorrow[['ds', 'yhat', 'yhat_upper',
                          'yhat_lower']].to_json(orient='records', date_format='iso')
     today = json.loads(today)
     tomorrow = json.loads(tomorrow)
+    tommorow_date = date.today() + timedelta(1)
     context = {
         "data": data_json,
         'data_df': data_df,
@@ -138,6 +139,7 @@ def prediksi(request, id_foreign):
         'df': df,
         'today': today,
         'tomorrow': tomorrow,
+        'tommorow_date': tommorow_date,
         'commodity_name': commodity_name,
         'mape': mape,
         'akurasi': 100-mape,

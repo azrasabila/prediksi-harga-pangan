@@ -10,7 +10,7 @@ class CommodityForm(forms.Form):
     pilih_komoditas = forms.ChoiceField(choices=komoditas,
                                         widget=forms.Select(
                                             attrs={
-                                                'class': 'form-select col-sm-2'
+                                                'class': 'form-select form-select-lg col-sm-2'
                                             }
                                         )
                                         )

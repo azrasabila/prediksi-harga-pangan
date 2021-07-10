@@ -6,6 +6,9 @@
   integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
   integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<script src="https://code.highcharts.com/highcharts.js"> </script>
+<script src="https://code.highcharts.com/modules/exporting.js"> </script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script>
   function drawLineGraph(data, labels, yhat_lower, yhat_upper, id) {
 
@@ -150,6 +153,60 @@
           }
         },
       },
+    });
+  }
+</script>
+<script>
+  function drawGraph(data, id) {
+    var _categories = data.map(function (e) {
+      return new Date(e.ds).toDateString();
+    });
+    var _values = data.map(function (e) {
+      return e.y;
+    });
+    Highcharts.chart(id, {
+      chart: {
+        zoomType: 'x'
+      },
+      title: {
+        text: `Data Historis Komoditas {{commodity_name}}`
+      },
+      // subtitle: {
+      //   text: ')'
+      // },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        categories: _categories,
+        crosshair: true,
+        type: 'datetime'
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Harga (Rp)'
+        }
+      },
+      tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+          '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+      },
+      plotOptions: {
+        column: {
+          pointPadding: 0.2,
+          borderWidth: 0
+        }
+      },
+      series: [{
+        name: 'Harga',
+        data: _values
+
+      }]
     });
   }
 </script>

@@ -7,7 +7,7 @@
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg fixed-top navbar-inverse shadow-sm" id="mainNav">
     <a class="navbar-brand fw-bold" href="/">
-      <img src="{% static 'img/binoculars-fill.svg' %}" href="/" height="40" width="75" style="padding-left: 10px;">
+      <img src="{% static 'img/polban.png' %}" href="/" width="56" style="padding-left: 1rem;">
       SILAHAP DI BANDUNG
     </a>
   </nav>
@@ -26,7 +26,7 @@
         <div class="card-body">
           <form method='post'>
             {% csrf_token %}
-            <h4>Pilih Komoditas</h4>
+            <h3>Pilih Komoditas</h3>
             <div class="pilihkomoditas row center">
               {{commodityForm.pilih_komoditas}}
               <button class="btn btn-success" type="submit">Prediksi</button>
@@ -39,9 +39,6 @@
       <h3>Hasil prediksi harga komoditas {{commodity_name}}</h3>
     </div>
     <div class="row" style="margin-bottom: 2rem; margin-top: 2rem;">
-      <div class="col">
-        {%include "snippets/akurasi.html"%}
-      </div>
       <div class="col">
         {%include "snippets/hariini.html"%}
       </div>
@@ -67,10 +64,12 @@
           </div>
           <div class="tab-pane fade" id="v-pills-table" role="tabpanel" aria-labelledby="v-pills-table-tab">
             {%include "snippets/table.html"%}
+            {%include "snippets/akurasi.html"%}
           </div>
           <div class="tab-pane fade" id="v-pills-chart-historical" role="tabpanel"
             aria-labelledby="v-pills-chart-historical-tab">
-            <canvas id="chart"></canvas>
+            <!-- <canvas id="chart"></canvas> -->
+            <div class="border" id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
           </div>
         </div>
       </div>
@@ -89,7 +88,8 @@
     drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
     drawLineGraph({{ yhat_week| safe}}, {{ labels_week| safe}}, {{ yhat_lower_week| safe}}, {{ yhat_upper_week| safe}}, 'myChartline_week');
     drawLineGraph({{ yhat_month| safe}}, {{ labels_month| safe}}, {{ yhat_lower_month| safe}}, {{ yhat_upper_month| safe}}, 'myChartline_month');
-    drawMultiGraph({{ data_df| safe}}, 'chart');
+    // drawMultiGraph({{ data_df| safe}}, 'chart');
+    drawGraph({{ data_df| safe}}, 'chart');
   </script>
   {% endlocalize %}
 </body>
@@ -189,7 +189,7 @@
   }
 
   .nav-link.active,
-  .show > .nav-link {
+  .show>.nav-link {
     background-color: transparent !important;
     border-color: transparent transparent #198754;
     border-bottom: 4px solid !important;

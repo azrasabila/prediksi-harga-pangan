@@ -113,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'id-id'
 
 TIME_ZONE = 'UTC'
 
@@ -125,6 +125,7 @@ USE_TZ = True
 
 USE_THOUSAND_SEPARATOR = True
 
+THOUSAND_SEPARATOR = '\xa0'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
