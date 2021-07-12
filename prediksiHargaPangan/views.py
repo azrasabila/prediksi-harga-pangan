@@ -92,7 +92,7 @@ def prediksi(request, id_foreign):
     data_forecast = json.loads(data_forecast)
     # data table
     data_json = prediksi[['ds', 'yhat', 'yhat_upper',
-                          'yhat_lower']].to_json(orient='records', date_format='iso', double_precision=0)
+                          'yhat_lower']].to_json(orient='records', double_precision=0)
     data_json = json.loads(data_json)
     # data kuartal
     yhat = prediksi['yhat'].to_json(orient='records')

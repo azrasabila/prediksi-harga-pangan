@@ -29,7 +29,7 @@
             <h3>Pilih Komoditas</h3>
             <div class="pilihkomoditas row center">
               {{commodityForm.pilih_komoditas}}
-              <button class="btn btn-success" type="submit">Prediksi</button>
+              <button class="btn btn-lg btn-success" type="submit">Prediksi</button>
             </div>
           </form>
         </div>
@@ -60,7 +60,7 @@
             <canvas id="myChartline_month"></canvas>
           </div>
           <div class="tab-pane fade" id="v-pills-chart" role="tabpanel" aria-labelledby="v-pills-chart-tab">
-            <canvas id="myChartline"></canvas>
+            <div class="border" id="myChartline" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
           <div class="tab-pane fade" id="v-pills-table" role="tabpanel" aria-labelledby="v-pills-table-tab">
             {%include "snippets/table.html"%}
@@ -69,7 +69,7 @@
           <div class="tab-pane fade" id="v-pills-chart-historical" role="tabpanel"
             aria-labelledby="v-pills-chart-historical-tab">
             <!-- <canvas id="chart"></canvas> -->
-            <div class="border" id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+            <div class="border" id="chart" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
         </div>
       </div>
@@ -85,7 +85,8 @@
   </footer>
   {%include "snippets/scripts.html"%}
   <script>
-    drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
+    // drawLineGraph({{ yhat| safe}}, {{ labels| safe}}, {{ yhat_lower| safe}}, {{ yhat_upper| safe}}, 'myChartline');
+    drawRangeGraph({{ data| safe}}, 'myChartline');
     drawLineGraph({{ yhat_week| safe}}, {{ labels_week| safe}}, {{ yhat_lower_week| safe}}, {{ yhat_upper_week| safe}}, 'myChartline_week');
     drawLineGraph({{ yhat_month| safe}}, {{ labels_month| safe}}, {{ yhat_lower_month| safe}}, {{ yhat_upper_month| safe}}, 'myChartline_month');
     // drawMultiGraph({{ data_df| safe}}, 'chart');

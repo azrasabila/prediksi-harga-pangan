@@ -7,11 +7,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
   integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
 <script src="https://code.highcharts.com/highcharts.js"> </script>
+<script src="https://code.highcharts.com/highcharts-more.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"> </script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 <script>
   function drawLineGraph(data, labels, yhat_lower, yhat_upper, id) {
-
     var ctx = document.getElementById(id).getContext("2d");
     var chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -171,9 +172,6 @@
       title: {
         text: `Data Historis Komoditas {{commodity_name}}`
       },
-      // subtitle: {
-      //   text: ')'
-      // },
       legend: {
         enabled: false
       },
@@ -191,7 +189,7 @@
       tooltip: {
         headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
         pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-          '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+          '<td style="padding:0"><b>Rp.{point.y:.0f}</b></td></tr>',
         footerFormat: '</table>',
         shared: true,
         useHTML: true
@@ -207,6 +205,82 @@
         data: _values
 
       }]
+    });
+  }
+</script>
+<script>
+  function drawRangeGraph(data, id) {
+    var prediksi = data.map(function (e) {
+      return [
+        new Date(e.ds).toDateString(),
+        e.yhat
+      ]
+    });
+    var batas = data.map(function (e) {
+      return [
+        new Date(e.ds).toDateString(),
+        e.yhat_upper,
+        e.yhat_lower
+      ]
+    });
+    var _categories = data.map(function (e) {
+      return new Date(e.ds).toDateString();
+    });
+    console.log(batas);
+    Highcharts.chart(id, {
+
+      chart: {
+        zoomType: 'x'
+      },
+
+      title: {
+        text: `Prediksi harga komoditas {{commodity_name}}`
+      },
+
+      legend: {
+        enabled: false
+      },
+
+      xAxis: {
+        categories: _categories,
+        crosshair: true,
+        type: 'datetime',
+      },
+
+      yAxis: {
+        title: {
+          text: 'Harga (Rp)'
+        }
+      },
+
+      tooltip: {
+        crosshairs: true,
+        shared: true,
+        valuePrefix: 'Rp.'
+      },
+
+      series: [{
+        name: 'Prediksi',
+        data: prediksi,
+        zIndex: 999,
+        marker: {
+          fillColor: 'blue',
+          lineWidth: 2,
+        }
+      },
+      {
+        name: 'Batas',
+        data: batas,
+        type: 'arearange',
+        lineWidth: 1,
+        linkedTo: ':previous',
+        fillOpacity: 0.3,
+        zIndex: 888,
+        marker: {
+          enabled: false
+        }
+      }
+      ]
     });
   }
 </script>
