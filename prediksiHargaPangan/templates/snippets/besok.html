@@ -2,10 +2,9 @@
 <div class="card" style="height: 100%;">
   <div class="card-body col">
     {% if tomorrow %} {% for i in tomorrow %}
-    <h5 class="card-title">Prediksi harga besok {{tommorow_date}} :</h5>
+    <h5 class="card-title">Prediksi harga besok {{tommorow_date}}</h5>
     <h4><b>Rp.{{i.yhat|floatformat:0}}</b></h4>
-    <p class="card-text">Batas Atas : Rp.{{i.yhat_upper|floatformat:0}}<br>Batas Bawah :
-      Rp.{{i.yhat_lower|floatformat:0}}</p>
+    <p class="card-text">Rentang Prediksi : Rp.{{i.yhat_lower|floatformat:0}} - Rp.{{i.yhat_upper|floatformat:0}}</p>
     {% endfor %} {% endif %}
   </div>
 </div>

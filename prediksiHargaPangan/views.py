@@ -94,6 +94,8 @@ def prediksi(request, id_foreign):
     prediksi_kuartal = prediksi[['ds', 'yhat', 'yhat_upper',
                                  'yhat_lower']].to_json(orient='records', double_precision=0)
     prediksi_kuartal = json.loads(prediksi_kuartal)
+    prediksi_kuartal_table = prediksi[['ds', 'yhat', 'yhat_upper',
+                                       'yhat_lower']].to_dict('records')
     # prediksi weekly
     prediksi_seminggu = week[['ds', 'yhat', 'yhat_upper',
                               'yhat_lower']].to_json(orient='records', double_precision=0)
@@ -111,6 +113,7 @@ def prediksi(request, id_foreign):
     tommorow_date = date.today() + timedelta(1)
     context = {
         "prediksi_kuartal": prediksi_kuartal,
+        "prediksi_kuartal_table": prediksi_kuartal_table,
         'data_df': data_df,
         "data_forecast": data_forecast,
         'prediksi_seminggu': prediksi_seminggu,

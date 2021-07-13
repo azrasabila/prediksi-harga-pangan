@@ -114,18 +114,16 @@
         e.yhat
       ]
     });
-    console.log(prediksi);
     var batas = data.map(function (e) {
       return [
         e.ds,
+        e.yhat_lower,
         e.yhat_upper,
-        e.yhat_lower
       ]
     });
-    var _categories = data.map(function (e) {
-      return e.ds;
-    });
-    console.log(batas);
+    // var _categories = data.map(function (e) {
+    //   return e.ds;
+    // });
     Highcharts.chart(id, {
 
       chart: {
@@ -141,7 +139,7 @@
       },
 
       xAxis: {
-        categories: _categories,
+        //categories: _categories,
         crosshair: true,
         type: 'datetime',
         title: {
@@ -151,7 +149,7 @@
           }
         },
         labels: {
-          format: '{value:%e %b %Y}',
+          format: '{value:%e %b %y}',
           style: {
             fontSize: '16px'
           }
@@ -192,7 +190,7 @@
         }
       },
       {
-        name: 'Batas',
+        name: 'Rentang Prediksi',
         data: batas,
         type: 'arearange',
         lineWidth: 0,
