@@ -52,14 +52,13 @@
       </div>
       <div class="col">
         <div class="tab-content" id="v-pills-TabContent">
-          <div class="tab-pane fade show active" id="v-pills-chart-week" role="tabpanel"
-            aria-labelledby="v-pills-chart-week-tab">
+          <div class="tab-pane fade" id="v-pills-chart-week" role="tabpanel" aria-labelledby="v-pills-chart-week-tab">
             <div class="border" id="myChartline_week" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
           <div class="tab-pane fade" id="v-pills-chart-month" role="tabpanel" aria-labelledby="v-pills-chart-month-tab">
             <div class="border" id="myChartline_month" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
-          <div class="tab-pane fade" id="v-pills-chart" role="tabpanel" aria-labelledby="v-pills-chart-tab">
+          <div class="tab-pane fade show active" id="v-pills-chart" role="tabpanel" aria-labelledby="v-pills-chart-tab">
             <div class="border" id="myChartline" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
           <div class="tab-pane fade" id="v-pills-table" role="tabpanel" aria-labelledby="v-pills-table-tab">
@@ -68,7 +67,6 @@
           </div>
           <div class="tab-pane fade" id="v-pills-chart-historical" role="tabpanel"
             aria-labelledby="v-pills-chart-historical-tab">
-            <!-- <canvas id="chart"></canvas> -->
             <div class="border" id="chart" style="min-width: 310px; height: 700px; margin: 0 auto"></div>
           </div>
         </div>
@@ -86,8 +84,8 @@
   {%include "snippets/scripts.html"%}
   <script>
     drawRangeGraph({{ prediksi_kuartal| safe}}, 'myChartline');
-    drawRangeGraph({{ prediksi_seminggu| safe}}, 'myChartline_week');
-    drawRangeGraph({{ prediksi_sebulan| safe}}, 'myChartline_month');
+    drawRangeGraph({{ prediksi_perminggu| safe}}, 'myChartline_week');
+    drawRangeGraph({{ prediksi_perbulan| safe}}, 'myChartline_month');
     drawGraph({{ data_df| safe}}, 'chart');
   </script>
   {% endlocalize %}

@@ -69,10 +69,6 @@ def prediksi(request, id_foreign):
                       == pd.to_datetime(now))]
     tomorrow = forecast[(pd.to_datetime(forecast["ds"])
                          == pd.to_datetime(now+timedelta(1)))]
-    week = prediksi[(pd.to_datetime(forecast["ds"])
-                     <= pd.to_datetime(now+timedelta(7)))]
-    month = prediksi[(pd.to_datetime(forecast["ds"])
-                      <= pd.to_datetime(now+timedelta(30)))]
     # split training data
     df_test = df[int(df.shape[0]*0.8):]
     y_true = df[int(df.shape[0]*0.8):]
@@ -96,14 +92,22 @@ def prediksi(request, id_foreign):
     prediksi_kuartal = json.loads(prediksi_kuartal)
     prediksi_kuartal_table = prediksi[['ds', 'yhat', 'yhat_upper',
                                        'yhat_lower']].to_dict('records')
-    # prediksi weekly
-    prediksi_seminggu = week[['ds', 'yhat', 'yhat_upper',
-                              'yhat_lower']].to_json(orient='records', double_precision=0)
-    prediksi_seminggu = json.loads(prediksi_seminggu)
+    # resampling hasil prediksi
+    prediksi.index = pd.to_datetime(prediksi.ds)
+    prediksi_perminggu = prediksi.resample('W').mean()
+    prediksi_perbulan = prediksi.resample('M').mean()
     # prediksi bulanan
-    prediksi_sebulan = month[['ds', 'yhat', 'yhat_upper',
-                              'yhat_lower']].to_json(orient='records', double_precision=0)
-    prediksi_sebulan = json.loads(prediksi_sebulan)
+    prediksi_perbulan['ds'] = prediksi_perbulan.index
+    prediksi_perbulan = prediksi_perbulan.to_json(
+        orient='records', double_precision=0)
+    prediksi_perbulan = json.loads(prediksi_perbulan)
+    # data perminggu
+    prediksi_perminggu['ds'] = prediksi_perminggu.index
+    prediksi_perminggu = prediksi_perminggu.to_json(
+        orient='records', double_precision=0)
+    prediksi_perminggu = json.loads(prediksi_perminggu)
+    # print(prediksi_perminggu)
+    # get data hari ini dan besok
     today = today[['ds', 'yhat', 'yhat_upper',
                    'yhat_lower']].to_json(orient='records')
     tomorrow = tomorrow[['ds', 'yhat', 'yhat_upper',
@@ -116,8 +120,8 @@ def prediksi(request, id_foreign):
         "prediksi_kuartal_table": prediksi_kuartal_table,
         'data_df': data_df,
         "data_forecast": data_forecast,
-        'prediksi_seminggu': prediksi_seminggu,
-        'prediksi_sebulan': prediksi_sebulan,
+        'prediksi_perminggu': prediksi_perminggu,
+        'prediksi_perbulan': prediksi_perbulan,
         'today': today,
         'tomorrow': tomorrow,
         'tommorow_date': tommorow_date,
